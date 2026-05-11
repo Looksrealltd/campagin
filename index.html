@@ -1,40 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Cure Media — Campaign Execution</title>
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-.wrap{padding:0 0 3rem;font-family:var(--font-sans)}
-h2.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
-.nav{display:flex;gap:6px;flex-wrap:wrap;padding-bottom:1.25rem;margin-bottom:2rem;border-bottom:0.5px solid var(--color-border-tertiary)}
-.nb{font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--color-text-secondary);background:none;border:0.5px solid var(--color-border-tertiary);border-radius:2rem;padding:5px 13px;cursor:pointer;transition:all .15s}
-.nb:hover,.nb.on{color:var(--color-text-primary);border-color:var(--color-border-primary);background:var(--color-background-secondary)}
-.sec{display:none}.sec.on{display:block}
-.ey{font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:.4rem}
-.big{font-family:var(--font-serif);font-size:26px;font-weight:400;line-height:1.25;color:var(--color-text-primary);margin-bottom:.75rem}
-.big i{font-style:italic}
-.bod{font-size:13.5px;line-height:1.8;color:var(--color-text-secondary)}
-.divd{border:none;border-top:0.5px solid var(--color-border-tertiary);margin:1.75rem 0}
-.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.1rem 1.25rem;margin-bottom:.875rem}
-.clbl{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:.3rem}
-.ctit{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:.35rem}
-.cbod{font-size:12.5px;line-height:1.7;color:var(--color-text-secondary)}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:.875rem;margin-bottom:.875rem}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin-bottom:.875rem}
-.sep{display:flex;align-items:center;gap:.875rem;margin:1.5rem 0}
-.sep-t{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-tertiary);white-space:nowrap}
-.sep-r{flex:1;border-top:0.5px solid var(--color-border-tertiary)}
-.met{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.875rem 1rem}
-.mv{font-size:22px;font-weight:500;color:var(--color-text-primary)}
-.ml{font-size:11px;color:var(--color-text-tertiary);margin-top:2px}
-.wk-row{display:grid;grid-template-columns:80px 1fr;gap:0;border-bottom:0.5px solid var(--color-border-tertiary);padding:.7rem 0}
-.wk-row:last-child{border-bottom:none}
-.wk-num{font-size:11px;font-weight:500;color:var(--color-text-tertiary);padding-top:2px}
-.wk-body{}
-.wk-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:.25rem}
-.wk-tasks{font-size:12px;color:var(--color-text-secondary);line-height:1.6}
-.own-row{display:grid;grid-template-columns:1fr 100px 120px;gap:8px;align-items:start;padding:.6rem 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:12.5px}
-.own-row:last-child{border-bottom:none}
-.own-task{color:var(--color-text-primary);font-weight:500;line-height:1.5}
-.own-sub{font-size:11.5px;color:var(--color-text-secondary);font-weight:400;margin-top:1px}
-.own-who{color:var(--color-text-secondary);font-size:12px}
+:root{
+  --font-sans: Inter, Arial, sans-serif;
+  --font-serif: Georgia, serif;
+
+  --color-text-primary:#111827;
+  --color-text-secondary:#4b5563;
+  --color-text-tertiary:#9ca3af;
+
+  --color-border-primary:#cbd5e1;
+  --color-border-secondary:#d1d5db;
+  --color-border-tertiary:#e5e7eb;
+
+  --color-background-primary:#ffffff;
+  --color-background-secondary:#f8fafc;
+
+  --color-background-info:#eff6ff;
+  --color-border-info:#bfdbfe;
+  --color-text-info:#2563eb;
+
+  --color-background-warning:#fef3c7;
+  --color-border-warning:#fde68a;
+  --color-text-warning:#b45309;
+
+  --color-background-danger:#fee2e2;
+  --color-border-danger:#fecaca;
+  --color-text-danger:#dc2626;
+
+  --color-background-success:#dcfce7;
+  --color-border-success:#bbf7d0;
+  --color-text-success:#15803d;
+
+  --border-radius-md:12px;
+  --border-radius-lg:20px;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  background:#fff;
+  color:var(--color-text-primary);
+  font-family:var(--font-sans);
+  line-height:1.6;
+}
+
+.wrap{
+  max-width:1200px;
+  margin:auto;
+  padding:2rem 1rem 4rem;
+}
+
+h2.sr-only{
+  position:absolute;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+}
+
+.nav{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  padding-bottom:1.25rem;
+  margin-bottom:2rem;
+  border-bottom:1px solid var(--color-border-tertiary);
+}
+
+.nb{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--color-text-secondary);
+  background:none;
+  border:1px solid var(--color-border-tertiary);
+  border-radius:999px;
+  padding:8px 14px;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.nb:hover,
+.nb.on{
+  background:var(--color-background-secondary);
+  color:var(--color-text-primary);
+  border-color:var(--color-border-primary);
+}
+
+.sec{
+  display:none;
+}
+
+.sec.on{
+  display:block;
+}
+
+.ey{
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--color-text-tertiary);
+  margin-bottom:.5rem;
+}
+
+.big{
+  font-family:var(--font-serif);
+  font-size:34px;
+  margin-bottom:1rem;
+  line-height:1.2;
+}
+
+.big i{
+  font-style:italic;
+}
+
+.bod{
+  font-size:15px;
+  color:var(--color-text-secondary);
+  line-height:1.8;
+}
+
+.divd{
+  border:none;
+  border-top:1px solid var(--color-border-tertiary);
+  margin:2rem 0;
+}
+
+.g2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1rem;
+}
+
+.g3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1rem;
+  margin-bottom:1rem;
+}
+
+.met{
+  background:var(--color-background-secondary);
+  border-radius:var(--border-radius-md);
+  padding:1rem;
+}
+
+.mv{
+  font-size:28px;
+  font-weight:700;
+}
+
+.ml{
+  font-size:12px;
+  color:var(--color-text-tertiary);
+}
+
+.sep{
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  margin:2rem 0;
+}
+
+.sep-r{
+  flex:1;
+  border-top:1px solid var(--color-border-tertiary);
+}
+
+.sep-t{
+  font-size:11px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--color-text-tertiary);
+}
+
+.card{
+  background:#fff;
+  border:1px solid var(--color-border-tertiary);
+  border-radius:var(--border-radius-lg);
+  padding:1.2rem;
+  margin-bottom:1rem;
+}
+
+.clbl{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--color-text-tertiary);
+  margin-bottom:.5rem;
+}
+
+.cbod{
+  font-size:14px;
+  color:var(--color-text-secondary);
+  line-height:1.8;
+}
+
+.tl-wrap{
+  padding-left:1.5rem;
+  position:relative;
+}
+
+.tl-wrap::before{
+  content:'';
+  position:absolute;
+  left:5px;
+  top:0;
+  bottom:0;
+  width:1px;
+  background:var(--color-border-tertiary);
+}
+
+.tl-item{
+  position:relative;
+  margin-bottom:1.75rem;
+}
+
+.tl-dot{
+  position:absolute;
+  left:-1.5rem;
+  top:5px;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#fff;
+  border:2px solid var(--color-text-primary);
+}
+
+.tl-phase{
+  font-size:11px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--color-text-tertiary);
+  margin-bottom:.2rem;
+}
+
+.tl-title{
+  font-size:16px;
+  font-weight:600;
+  margin-bottom:.3rem;
+}
+
+.tl-body{
+  font-size:14px;
+  color:var(--color-text-secondary);
+}
+
+.risk-card{
+  border:1px solid var(--color-border-tertiary);
+  border-radius:var(--border-radius-lg);
+  overflow:hidden;
+  margin-bottom:1rem;
+}
+
+.rh{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:1rem;
+  cursor:pointer;
+  background:#fff;
+}
+
+.rh:hover{
+  background:var(--color-background-secondary);
+}
+
+.rh-icon{
+  width:36px;
+  height:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px;
+  flex-shrink:0;
+}
+
+.r-high .rh-icon{
+  background:var(--color-background-danger);
+  color:var(--color-text-danger);
+}
+
+.r-med .rh-icon{
+  background:var(--color-background-warning);
+  color:var(--color-text-warning);
+}
+
+.r-low .rh-icon{
+  background:var(--color-background-success);
+  color:var(--color-text-success);
+}
+
+.rh-text{
+  flex:1;
+}
+
+.rh-title{
+  font-size:14px;
+  font-weight:600;
+}
+
+.rh-sub{
+  font-size:12px;
+  color:var(--color-text-secondary);
+}
+
+.rh-sev{
+  font-size:10px;
+  padding:4px 10px;
+  border-radius:999px;
+  font-weight:700;
+}
+
+.sev-h{
+  background:var(--color-background-danger);
+  color:var(--color-text-danger);
+}
+
+.sev-m{
+  background:var(--color-background-warning);
+  color:var(--color-text-warning);
+}
+
+.sev-l{
+  background:var(--color-background-success);
+  color:var(--color-text-success);
+}
+
+.tog{
+  transition:.2s ease;
+  font-size:18px;
+}
+
+.tog.open{
+  transform:rotate(180deg);
+}
+
+.rb{
+  display:none;
+  padding:1rem;
+  border-top:1px solid var(--color-border-tertiary);
+  background:#fff;
+}
+
+.rb.open{
+  display:block;
+}
+
+.rb-sect{
+  margin-bottom:1rem;
+}
+
+.rb-lbl{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--color-text-tertiary);
+  margin-bottom:.3rem;
+}
+
+.rb-val{
+  font-size:14px;
+  line-height:1.8;
+  color:var(--color-text-secondary);
+}
+
+.rb-val strong{
+  color:var(--color-text-primary);
+}
+
+@media (max-width:768px){
+
+  .g2,
+  .g3{
+    grid-template-columns:1fr;
+  }
+
+  .big{
+    font-size:28px;
+  }
+
+  .rh{
+    align-items:flex-start;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<h2 class="sr-only">
+Cure Media campaign execution dashboard
+</h2>
+
+<nav class="nav" role="tablist">
+
+<button class="nb on"
+data-tab="overview"
+role="tab"
+aria-selected="true">
+Overview
+</button>
+
+<button class="nb"
+data-tab="timeline"
+role="tab"
+aria-selected="false">
+Timeline
+</button>
+
+<button class="nb"
+data-tab="risks"
+role="tab"
+aria-selected="false">
+Risk Register
+</button>
+
+</nav>
+
+<!-- OVERVIEW -->
+<section id="overview" class="sec on">
+
+<div class="ey">Campaign execution</div>
+
+<div class="big">
+Skin That Knows You —
+<i>live</i>
+</div>
+
+<p class="bod">
+What running this campaign actually looks like from the inside.
+Tasks, owners, decision points, and response protocols.
+</p>
+
+<hr class="divd">
+
+<div class="g3">
+
+<div class="met">
+<div class="mv">8</div>
+<div class="ml">Week campaign</div>
+</div>
+
+<div class="met">
+<div class="mv">18–23</div>
+<div class="ml">Active creators</div>
+</div>
+
+<div class="met">
+<div class="mv">4</div>
+<div class="ml">Team members</div>
+</div>
+
+</div>
+
+<div class="sep">
+<div class="sep-r"></div>
+<div class="sep-t">Campaign phases</div>
+<div class="sep-r"></div>
+</div>
+
+<div class="tl-wrap">
+
+<div class="tl-item">
+<div class="tl-dot"></div>
+<div class="tl-phase">Phase 1</div>
+<div class="tl-title">Set up and onboarding</div>
+<div class="tl-body">
+Creator selection, contracts, product seeding,
+and briefing.
+</div>
+</div>
+
+<div class="tl-item">
+<div class="tl-dot"></div>
+<div class="tl-phase">Phase 2</div>
+<div class="tl-title">Content production</div>
+<div class="tl-body">
+Draft reviews, approvals, and publishing prep.
+</div>
+</div>
+
+<div class="tl-item">
+<div class="tl-dot"></div>
+<div class="tl-phase">Phase 3</div>
+<div class="tl-title">Launch and optimisation</div>
+<div class="tl-body">
+Content goes live, comments monitored,
+performance analysed.
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline" class="sec">
+
+<div class="ey">Week by week</div>
+
+<div class="big">
+Execution
+<i>timeline</i>
+</div>
+
+<div class="card">
+<div class="clbl">Week 1</div>
+<div class="cbod">
+Creator selection finalised. Contracts prepared.
+Product shipment confirmed.
+</div>
+</div>
+
+<div class="card">
+<div class="clbl">Week 2</div>
+<div class="cbod">
+Onboarding, briefing calls, and campaign tracker setup.
+</div>
+</div>
+
+<div class="card">
+<div class="clbl">Week 3</div>
+<div class="cbod">
+Tier 1 creators submit content drafts for review.
+</div>
+</div>
+
+<div class="card">
+<div class="clbl">Week 4</div>
+<div class="cbod">
+Client approvals and scheduling.
+</div>
+</div>
+
+</section>
+
+<!-- RISKS -->
+<section id="risks" class="sec">
+
+<div class="ey">Risk register</div>
+
+<div class="big">
+What
+<i>can go wrong</i>
+</div>
+
+<div class="risk-card r-high">
+
+<div class="rh" data-risk="r1">
+
+<div class="rh-icon">
+<i class="ti ti-user-x"></i>
+</div>
+
+<div class="rh-text">
+<div class="rh-title">
+Tier 1 creator drops out
+</div>
+
+<div class="rh-sub">
+Unexpected withdrawal during campaign
+</div>
+</div>
+
+<span class="rh-sev sev-h">High</span>
+
+<span class="tog" id="tog-r1">↓</span>
+
+</div>
+
+<div class="rb" id="r1">
+
+<div class="rb-sect">
+<div class="rb-lbl">Response</div>
+
+<div class="rb-val">
+Maintain two standby creators ready before launch.
+Activate replacement immediately before informing client.
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="risk-card r-med">
+
+<div class="rh" data-risk="r2">
+
+<div class="rh-icon">
+<i class="ti ti-alert-circle"></i>
+</div>
+
+<div class="rh-text">
+<div class="rh-title">
+Off-brief content published
+</div>
+
+<div class="rh-sub">
+Incorrect product claim or unsafe messaging
+</div>
+</div>
+
+<span class="rh-sev sev-m">Medium</span>
+
+<span class="tog" id="tog-r2">↓</span>
+
+</div>
+
+<div class="rb" id="r2">
+
+<div class="rb-sect">
+<div class="rb-lbl">Response</div>
+
+<div class="rb-val">
+Contact creator privately within two hours,
+correct or remove the content,
+then update the client with resolution.
+</div>
+</div>
+
+</div>
+</div>
+
+</section>
+
+</div>
+
+<script>
+const tabs = document.querySelectorAll('.nb');
+const sections = document.querySelectorAll('.sec');
+
+tabs.forEach(tab => {
+
+  tab.addEventListener('click', () => {
+
+    const target = tab.dataset.tab;
+
+    tabs.forEach(btn => {
+      btn.classList.remove('on');
+      btn.setAttribute('aria-selected', 'false');
+    });
+
+    sections.forEach(sec => {
+      sec.classList.remove('on');
+    });
+
+    tab.classList.add('on');
+    tab.setAttribute('aria-selected', 'true');
+
+    const section = document.getElementById(target);
+
+    if(section){
+      section.classList.add('on');
+    }
+
+  });
+
+});
+
+document.querySelectorAll('.rh').forEach(header => {
+
+  header.addEventListener('click', () => {
+
+    const id = header.dataset.risk;
+
+    const body = document.getElementById(id);
+    const toggle = document.getElementById('tog-' + id);
+
+    if(!body || !toggle) return;
+
+    const open = body.classList.contains('open');
+
+    body.classList.toggle('open', !open);
+    toggle.classList.toggle('open', !open);
+
+    toggle.textContent = open ? '↓' : '↑';
+
+  });
+
+});
+</script>
+
+</body>
+</html>.own-who{color:var(--color-text-secondary);font-size:12px}
 .badge{display:inline-block;font-size:10px;font-weight:500;padding:3px 9px;border-radius:2rem;letter-spacing:.03em}
 .b-cd{background:var(--color-background-primary);border:0.5px solid var(--color-border-primary);color:var(--color-text-primary)}
 .b-co{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary)}
